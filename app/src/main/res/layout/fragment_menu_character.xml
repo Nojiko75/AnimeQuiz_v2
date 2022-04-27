@@ -1,13 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".MenuCharacterFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/characters" />
+    <Button
+        android:id="@+id/easy_button"
+        android:layout_width="260dp"
+        android:layout_height="130dp"
+        android:backgroundTint="@color/easy"
+        android:drawableStart="@drawable/easy_level_star"
+        android:text="@string/easy"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/medium_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/medium_button"
+        android:layout_width="260dp"
+        android:layout_height="130dp"
+        android:backgroundTint="@color/medium"
+        android:drawableStart="@drawable/medium_level_star"
+        android:text="@string/medium"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/hard_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/easy_button" />
+
+    <Button
+        android:id="@+id/hard_button"
+        android:layout_width="260dp"
+        android:layout_height="130dp"
+        android:backgroundTint="@color/hard"
+        android:drawableStart="@drawable/hard_level_star"
+        android:text="@string/hard"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medium_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

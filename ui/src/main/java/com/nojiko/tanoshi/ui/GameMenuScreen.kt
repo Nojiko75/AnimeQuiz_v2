@@ -49,7 +49,7 @@ fun SimpleComposable() {
 
 @Preview
 @Composable
-//@ExperimentalPagerApi
+@ExperimentalPagerApi
 fun ComposablePreview() {
     SimpleComposable()
 }

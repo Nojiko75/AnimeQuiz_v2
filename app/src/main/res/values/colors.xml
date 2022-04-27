@@ -8,4 +8,8 @@
     <color name="app_bar">#3A9594</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="easy">#8FCF3B</color>
+    <color name="medium">#FF5B2B</color>
+    <color name="hard">#C20000</color>
 </resources>

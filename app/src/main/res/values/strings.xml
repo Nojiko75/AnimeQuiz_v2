@@ -3,4 +3,8 @@
     <string name="characters">Personnages</string>
     <string name="mangas">Mangas</string>
     <string name="culture">Culture Jap</string>
+
+    <string name="easy">Facile</string>
+    <string name="medium">Moyen</string>
+    <string name="hard">Difficile</string>
 </resources>
