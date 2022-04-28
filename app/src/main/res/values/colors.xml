@@ -10,6 +10,9 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="easy">#8FCF3B</color>
+    <color name="easy_opacity">#bbdd90</color>
     <color name="medium">#FF5B2B</color>
+    <color name="medium_opacity">#ffa78d</color>
     <color name="hard">#C20000</color>
+    <color name="hard_opacity">#f68a8a</color>
 </resources>
