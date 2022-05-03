@@ -15,4 +15,7 @@
     <color name="medium_opacity">#ffa78d</color>
     <color name="hard">#C20000</color>
     <color name="hard_opacity">#f68a8a</color>
+    <color name="character_name">#4BB5C1</color>
+    <color name="background_page">#32455A</color>
+    <color name="button_green">#8FCF3C</color>
 </resources>
