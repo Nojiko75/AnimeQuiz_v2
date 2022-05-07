@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuCharacterFragment"
+        android:icon="@drawable/avatar"
+        android:title="@string/characters" />
+    <item
+        android:id="@+id/menuMangaFragment"
+        android:icon="@drawable/anime"
+        android:title="@string/mangas" />
+    <item
+        android:id="@+id/menuCultureFragment"
+        android:icon="@drawable/porte_torii"
+        android:title="@string/culture" />
+</menu>
