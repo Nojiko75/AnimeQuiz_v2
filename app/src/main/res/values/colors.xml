@@ -18,4 +18,5 @@
     <color name="character_name">#4BB5C1</color>
     <color name="background_page">#32455A</color>
     <color name="button_green">#8FCF3C</color>
+    <color name="border_image">#464F57</color>
 </resources>

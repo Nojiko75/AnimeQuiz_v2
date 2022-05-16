@@ -24,7 +24,7 @@
             android:background="@drawable/index_background"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="1/9"
+            android:text="@string/index"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageOnigiri"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:src="@drawable/cup"
+            android:src="@drawable/trophy"
             app:layout_constraintBottom_toBottomOf="@+id/index"
             app:layout_constraintStart_toEndOf="@+id/score"
             app:layout_constraintTop_toTopOf="@+id/index" />
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:text="0"
+            android:text="@string/game_placeholder"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageScore"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="32dp"
-            android:text="10"
+            android:text="@string/game_placeholder"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -97,14 +97,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Qui est :"
+            android:text="@string/who_is"
             android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Uzumaki Naruto"
+            android:text="@string/uzumaki_naruto"
             android:textColor="@color/character_name"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -112,76 +112,65 @@
 
     <Button
         android:id="@+id/clue_button"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
+        style="@style/GameButton"
         android:layout_marginStart="44dp"
         android:layout_marginTop="40dp"
-        android:backgroundTint="@color/button_green"
-        android:text="Indice"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:icon="@drawable/clue"
-        app:iconTint="@color/white"
+        android:text="@string/clue"
+        app:icon="@drawable/idea"
         app:layout_constraintEnd_toStartOf="@+id/next_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionBloc"
-        app:shapeAppearanceOverlay="@style/GameButton" />
+        app:shapeAppearanceOverlay="@style/GameButtonRadius" />
 
     <Button
         android:id="@+id/next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
+        style="@style/GameButton"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="44dp"
-        android:backgroundTint="@color/button_green"
         android:drawableEnd="@drawable/next"
-        android:text="Passer"
-        android:textColor="@color/white"
-        android:textSize="16sp"
+        android:text="@string/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/clue_button"
         app:layout_constraintTop_toBottomOf="@+id/questionBloc"
-        app:shapeAppearanceOverlay="@style/GameButton" />
+        app:shapeAppearanceOverlay="@style/GameButtonRadius" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/answerA"
         android:layout_marginTop="40dp"
+        style="@style/EasyImage"
         android:src="@drawable/toramizu_ginta"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/answerB"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clue_button" />
+        app:layout_constraintTop_toBottomOf="@+id/clue_button"
+        app:shapeAppearanceOverlay="@style/RoundedImage" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/answerB"
         android:layout_marginTop="40dp"
+        style="@style/EasyImage"
         android:src="@drawable/kakashi_hatake"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/next_button" />
+        app:layout_constraintStart_toEndOf="@+id/answerA"
+        app:layout_constraintTop_toBottomOf="@+id/next_button"
+        app:shapeAppearanceOverlay="@style/RoundedImage" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/answerC"
         android:layout_marginTop="20dp"
+        style="@style/EasyImage"
         android:src="@drawable/uzumaki_naruto"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/answerD"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/answerA"
+        app:shapeAppearanceOverlay="@style/RoundedImage" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/answerD"
         android:layout_marginTop="20dp"
+        style="@style/EasyImage"
         android:src="@drawable/namikaze_minato"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintStart_toEndOf="@+id/answerC"
+        app:layout_constraintTop_toBottomOf="@+id/answerB"
+        app:shapeAppearanceOverlay="@style/RoundedImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
