@@ -114,7 +114,7 @@
     <Button
         android:id="@+id/clue_button"
         style="@style/GameButton"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         android:text="@string/clue"
         app:icon="@drawable/idea"
@@ -127,7 +127,7 @@
         android:id="@+id/next_button"
         style="@style/GameButton"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="40dp"
         android:drawableEnd="@drawable/next"
         android:text="@string/next"
         app:layout_constraintEnd_toEndOf="parent"

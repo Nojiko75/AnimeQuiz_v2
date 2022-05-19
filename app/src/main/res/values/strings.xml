@@ -7,7 +7,7 @@
     <string name="easy">Facile</string>
     <string name="medium">Moyen</string>
     <string name="hard">Difficile</string>
-    <string name="index">1/9</string>
+    <string name="index">%1$d/%2$d</string>
     <string name="game_placeholder">10</string>
     <string name="who_is">Qui est :</string>
     <string name="uzumaki_naruto">Uzumaki Naruto</string>
