@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_page"
-    android:id="@+id/parentContainer"
     tools:context=".CharacterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,7 +82,7 @@
         android:id="@+id/questionBloc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/question_background"
         android:orientation="vertical"
         android:paddingLeft="30dp"
@@ -115,7 +115,7 @@
         android:id="@+id/clue_button"
         style="@style/GameButton"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:text="@string/clue"
         app:icon="@drawable/idea"
         app:layout_constraintEnd_toStartOf="@+id/next_button"
@@ -126,7 +126,7 @@
     <Button
         android:id="@+id/next_button"
         style="@style/GameButton"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="40dp"
         android:drawableEnd="@drawable/next"
         android:text="@string/next"
@@ -137,8 +137,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/answerA"
-        android:layout_marginTop="40dp"
         style="@style/EasyImage"
+        android:layout_marginTop="32dp"
         android:src="@drawable/toramizu_ginta"
         app:layout_constraintEnd_toStartOf="@+id/answerB"
         app:layout_constraintStart_toStartOf="parent"
@@ -147,8 +147,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/answerB"
-        android:layout_marginTop="40dp"
         style="@style/EasyImage"
+        android:layout_marginTop="32dp"
         android:src="@drawable/kakashi_hatake"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/answerA"
@@ -157,9 +157,10 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/answerC"
-        android:layout_marginTop="20dp"
         style="@style/EasyImage"
+        android:layout_marginTop="20dp"
         android:src="@drawable/uzumaki_naruto"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/answerD"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answerA"
@@ -167,11 +168,20 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/answerD"
-        android:layout_marginTop="20dp"
         style="@style/EasyImage"
+        android:layout_marginTop="20dp"
         android:src="@drawable/namikaze_minato"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/answerC"
         app:layout_constraintTop_toBottomOf="@+id/answerB"
         app:shapeAppearanceOverlay="@style/RoundedImage" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="36dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
