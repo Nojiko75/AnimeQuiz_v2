@@ -119,7 +119,7 @@ class CharacterFragment : Fragment() {
     companion object {
         private val TAG = CharacterFragment::class.java.simpleName
         private const val IMAGE_COLLECTION = "easy_character_image"
-        private const val QUESTION_COLLECTION = "easy_character_image"
+        private const val QUESTION_COLLECTION = "easy_character_question"
         private const val RIGHT_COLOR = R.color.button_green
         private const val WRONG_COLOR = R.color.button_close
     }
