@@ -7,6 +7,8 @@ class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Hide action bar for Android 12
+        supportActionBar?.hide()
         setContentView(R.layout.activity_game)
     }
 }
