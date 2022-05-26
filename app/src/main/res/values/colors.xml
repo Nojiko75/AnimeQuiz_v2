@@ -8,6 +8,7 @@
     <color name="app_bar">#3A9594</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blue">#8CC6D7</color>
 
     <color name="easy">#8FCF3B</color>
     <color name="easy_opacity">#bbdd90</color>
@@ -20,4 +21,6 @@
     <color name="button_green">#8FCF3C</color>
     <color name="button_close">#C20000</color>
     <color name="border_image">#464F57</color>
+    <color name="underline">#74A6B5</color>
+    <color name="button_yellow">#ffd981</color>
 </resources>

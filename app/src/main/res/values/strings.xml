@@ -13,4 +13,10 @@
     <string name="uzumaki_naruto">Uzumaki Naruto</string>
     <string name="clue">Indice</string>
     <string name="next">Passer</string>
+    <string name="congrats">Félicitation !</string>
+    <string name="game_over">Vous avez terminé le niveau !</string>
+    <string name="characters_found">Nombre de personnages trouvés :</string>
+    <string name="score">Score :</string>
+    <string name="home">Accueil</string>
+    <string name="ranking">Ranking</string>
 </resources>

@@ -98,6 +98,10 @@ class CharacterFragment : Fragment() {
                         image.strokeColor = ColorStateList.valueOf(getColor(R.color.border_image))
                     } else {
                         //the game is over, go to DoneFragment
+                        DoneDialogFragment().show(
+                            childFragmentManager, DoneDialogFragment.TAG
+                        )
+
                     }
                 }, 500)
             }
