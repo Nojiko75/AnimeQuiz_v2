@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -17,6 +19,7 @@ import com.google.firebase.storage.ktx.storage
 import com.nojiko.tanoshi.animequiz_v2.databinding.FragmentCharacterBinding
 import com.nojiko.tanoshi.animequiz_v2.firebase.convertToModel
 import com.nojiko.tanoshi.domain.EasyCharacterQuestion
+import com.nojiko.tanoshi.domain.GameData
 
 class CharacterFragment : Fragment() {
     private val storage = Firebase.storage
@@ -25,6 +28,7 @@ class CharacterFragment : Fragment() {
     private var score = 0
     private var nbOnigiri = 10
     private var nbCharacter = 0
+    private var nbFounded = 0
     private lateinit var rightAnswer: String
     private lateinit var questionList: List<EasyCharacterQuestion>
     private lateinit var proposals: List<ShapeableImageView>
@@ -85,12 +89,12 @@ class CharacterFragment : Fragment() {
         for (image in proposals) {
             image.setOnClickListener {
                 if (rightAnswer == image.tag.toString()) {
-                    answerColor = getColor(RIGHT_COLOR)
-                    updateData()
+                    answerColor = RIGHT_COLOR
                 } else {
-                    answerColor = getColor(WRONG_COLOR)
+                    answerColor = WRONG_COLOR
                 }
-                image.strokeColor = ColorStateList.valueOf(answerColor)
+                updateData(answerColor)
+                image.strokeColor = ColorStateList.valueOf(getColor(answerColor))
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (index + 1 < nbCharacter) {
                         showGame()
@@ -98,6 +102,10 @@ class CharacterFragment : Fragment() {
                         image.strokeColor = ColorStateList.valueOf(getColor(R.color.border_image))
                     } else {
                         //the game is over, go to DoneFragment
+                        setFragmentResult(
+                            "requestKey",
+                            bundleOf("data" to GameData(score, 27, nbFounded, nbCharacter))
+                        )
                         DoneDialogFragment().show(
                             childFragmentManager, DoneDialogFragment.TAG
                         )
@@ -108,11 +116,20 @@ class CharacterFragment : Fragment() {
         }
     }
 
-    private fun updateData() {
-        nbOnigiri += 5
-        binding.nbOnigiri.text = nbOnigiri.toString()
-        score += 3
-        binding.score.text = score.toString()
+    private fun updateData(answerColor: Int) {
+        when (answerColor) {
+            RIGHT_COLOR -> {
+                nbOnigiri += GAINED_ONIGIRI
+                binding.nbOnigiri.text = nbOnigiri.toString()
+                score += GAINED_SCORE
+                binding.score.text = score.toString()
+                nbFounded++
+            }
+            WRONG_COLOR -> {
+                if (score >= GAINED_SCORE) score -= GAINED_SCORE else score = 0
+                binding.score.text = score.toString()
+            }
+        }
     }
 
     private fun getStorageReference(image: String) =
@@ -126,5 +143,7 @@ class CharacterFragment : Fragment() {
         private const val QUESTION_COLLECTION = "easy_character_question"
         private const val RIGHT_COLOR = R.color.button_green
         private const val WRONG_COLOR = R.color.button_close
+        private const val GAINED_SCORE = 3
+        private const val GAINED_ONIGIRI = 5
     }
 }
