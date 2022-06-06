@@ -9,9 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -88,10 +86,10 @@ class CharacterFragment : Fragment() {
         var answerColor: Int
         for (image in proposals) {
             image.setOnClickListener {
-                if (rightAnswer == image.tag.toString()) {
-                    answerColor = RIGHT_COLOR
+                answerColor = if (rightAnswer == image.tag.toString()) {
+                    RIGHT_COLOR
                 } else {
-                    answerColor = WRONG_COLOR
+                    WRONG_COLOR
                 }
                 updateData(answerColor)
                 image.strokeColor = ColorStateList.valueOf(getColor(answerColor))
@@ -102,14 +100,15 @@ class CharacterFragment : Fragment() {
                         image.strokeColor = ColorStateList.valueOf(getColor(R.color.border_image))
                     } else {
                         //the game is over, go to DoneFragment
-                        setFragmentResult(
-                            "requestKey",
-                            bundleOf("data" to GameData(score, 27, nbFounded, nbCharacter))
-                        )
-                        DoneDialogFragment().show(
-                            childFragmentManager, DoneDialogFragment.TAG
-                        )
+                        val bundle = Bundle().apply {
+                            putSerializable(
+                                "data",
+                                GameData(score, 27, nbFounded, nbCharacter)
+                            )
+                        }
+                        childFragmentManager.setFragmentResult("requestKey", bundle)
 
+                        DoneDialogFragment().show(childFragmentManager, DoneDialogFragment.TAG)
                     }
                 }, 500)
             }
