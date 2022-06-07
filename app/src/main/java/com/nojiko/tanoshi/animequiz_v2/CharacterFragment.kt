@@ -47,7 +47,7 @@ class CharacterFragment : Fragment() {
                 questionList = convertToModel(result)
                 nbCharacter = questionList.size
                 showGame()
-                binding.index.text = getString(R.string.index, index, nbCharacter)
+                binding.index.text = getString(R.string.index, index + 1, nbCharacter)
                 binding.nbOnigiri.text = nbOnigiri.toString()
                 binding.score.text = score.toString()
                 checkAnswer()
@@ -78,7 +78,6 @@ class CharacterFragment : Fragment() {
                         .into(proposals[index])
                     proposals[index].tag = image
                 }
-            index++
         }
     }
 
@@ -95,6 +94,7 @@ class CharacterFragment : Fragment() {
                 image.strokeColor = ColorStateList.valueOf(getColor(answerColor))
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (index + 1 < nbCharacter) {
+                        ++index
                         showGame()
                         binding.index.text = getString(R.string.index, index + 1, nbCharacter)
                         image.strokeColor = ColorStateList.valueOf(getColor(R.color.border_image))
