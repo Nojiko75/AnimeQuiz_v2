@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -100,15 +101,12 @@ class CharacterFragment : Fragment() {
                         image.strokeColor = ColorStateList.valueOf(getColor(R.color.border_image))
                     } else {
                         //the game is over, go to DoneFragment
-                        val bundle = Bundle().apply {
-                            putSerializable(
-                                "data",
-                                GameData(score, 27, nbFounded, nbCharacter)
+                        val gameData = GameData(score, 27, nbFounded, nbCharacter)
+                        val action =
+                            CharacterFragmentDirections.actionCharacterFragmentToDoneDialogFragment(
+                                gameData
                             )
-                        }
-                        childFragmentManager.setFragmentResult("requestKey", bundle)
-
-                        DoneDialogFragment().show(childFragmentManager, DoneDialogFragment.TAG)
+                        findNavController().navigate(action)
                     }
                 }, 500)
             }
