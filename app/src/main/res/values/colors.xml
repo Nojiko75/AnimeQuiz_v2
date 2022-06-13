@@ -23,4 +23,5 @@
     <color name="border_image">#464F57</color>
     <color name="underline">#74A6B5</color>
     <color name="button_yellow">#ffd981</color>
+    <color name="button_disabled">#AED083</color>
 </resources>

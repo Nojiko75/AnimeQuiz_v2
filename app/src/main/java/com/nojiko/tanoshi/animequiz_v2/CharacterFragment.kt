@@ -52,6 +52,8 @@ class CharacterFragment : Fragment() {
                 binding.nbOnigiri.text = nbOnigiri.toString()
                 binding.score.text = score.toString()
                 checkAnswer()
+
+                binding.nextButton.setOnClickListener { pass() }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
@@ -79,6 +81,7 @@ class CharacterFragment : Fragment() {
                         .into(proposals[index])
                     proposals[index].tag = image
                 }
+            updateNextButton()
         }
     }
 
@@ -101,12 +104,7 @@ class CharacterFragment : Fragment() {
                         image.strokeColor = ColorStateList.valueOf(getColor(R.color.border_image))
                     } else {
                         //the game is over, go to DoneFragment
-                        val gameData = GameData(score, 27, nbFounded, nbCharacter)
-                        val action =
-                            CharacterFragmentDirections.actionCharacterFragmentToDoneDialogFragment(
-                                gameData
-                            )
-                        findNavController().navigate(action)
+                        gameOver()
                     }
                 }, 500)
             }
@@ -133,6 +131,41 @@ class CharacterFragment : Fragment() {
         storageRef.child("${IMAGE_COLLECTION}/${image}.jpg")
 
     private fun getColor(color: Int) = ContextCompat.getColor(requireContext(), color)
+
+    private fun pass() {
+        nbOnigiri -= GAINED_ONIGIRI
+        binding.nbOnigiri.text = nbOnigiri.toString()
+        if (index + 1 < nbCharacter) {
+            ++index
+            showGame()
+            binding.index.text = getString(R.string.index, index + 1, nbCharacter)
+            checkAnswer()
+        } else {
+            //the game is over, go to DoneFragment
+            gameOver()
+        }
+    }
+
+    private fun gameOver() {
+        val gameData = GameData(score, 27, nbFounded, nbCharacter)
+        val action =
+            CharacterFragmentDirections.actionCharacterFragmentToDoneDialogFragment(
+                gameData
+            )
+        findNavController().navigate(action)
+    }
+
+    private fun updateNextButton() {
+        if (nbOnigiri >= GAINED_ONIGIRI) {
+            binding.nextButton.isEnabled = true
+            binding.nextButton.isClickable = true
+            binding.nextButton.setBackgroundColor(getColor(R.color.button_green))
+        } else {
+            binding.nextButton.isEnabled = false
+            binding.nextButton.isClickable = false
+            binding.nextButton.setBackgroundColor(getColor(R.color.button_disabled))
+        }
+    }
 
     companion object {
         private val TAG = CharacterFragment::class.java.simpleName
