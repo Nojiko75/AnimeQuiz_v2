@@ -1,6 +1,7 @@
 package com.nojiko.tanoshi.animequiz_v2
 
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -28,6 +31,7 @@ class CharacterFragment : Fragment() {
     private var nbOnigiri = 10
     private var nbCharacter = 0
     private var nbFounded = 0
+    private var clueUsed = false
     private lateinit var rightAnswer: String
     private lateinit var questionList: List<EasyCharacterQuestion>
     private lateinit var proposals: List<ShapeableImageView>
@@ -36,6 +40,7 @@ class CharacterFragment : Fragment() {
     private var _binding: FragmentCharacterBinding? = null
     private val binding get() = _binding!!
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,6 +59,7 @@ class CharacterFragment : Fragment() {
                 checkAnswer()
 
                 binding.nextButton.setOnClickListener { pass() }
+                binding.clueButton.setOnClickListener { clue() }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)
@@ -81,10 +87,13 @@ class CharacterFragment : Fragment() {
                         .into(proposals[index])
                     proposals[index].tag = image
                 }
-            updateNextButton()
+            updateButton(binding.nextButton)
+            updateButton(binding.clueButton)
+            clueUsed = false
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun checkAnswer() {
         var answerColor: Int
         for (image in proposals) {
@@ -102,6 +111,11 @@ class CharacterFragment : Fragment() {
                         showGame()
                         binding.index.text = getString(R.string.index, index + 1, nbCharacter)
                         image.strokeColor = ColorStateList.valueOf(getColor(R.color.border_image))
+                        for (proposal in proposals) {
+                            proposal.isClickable = true
+                            proposal.foreground = null
+                            proposal.alpha = 1F
+                        }
                     } else {
                         //the game is over, go to DoneFragment
                         gameOver()
@@ -132,6 +146,7 @@ class CharacterFragment : Fragment() {
 
     private fun getColor(color: Int) = ContextCompat.getColor(requireContext(), color)
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun pass() {
         nbOnigiri -= GAINED_ONIGIRI
         binding.nbOnigiri.text = nbOnigiri.toString()
@@ -144,6 +159,38 @@ class CharacterFragment : Fragment() {
             //the game is over, go to DoneFragment
             gameOver()
         }
+        if (nbOnigiri < GAINED_ONIGIRI) {
+            binding.clueButton.isEnabled = false
+            binding.clueButton.isClickable = false
+            binding.clueButton.setBackgroundColor(getColor(R.color.button_disabled))
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun clue() {
+        clueUsed = true
+        nbOnigiri -= GAINED_ONIGIRI
+        binding.nbOnigiri.text = nbOnigiri.toString()
+        binding.clueButton.isEnabled = false
+        binding.clueButton.isClickable = false
+        binding.clueButton.setBackgroundColor(getColor(R.color.button_disabled))
+        val clue = proposals.filter { it.tag != rightAnswer }
+            .shuffled()
+            .toMutableList()
+
+        clue.removeAt(0)
+
+        clue.forEach {
+            it.foreground =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_clear_24)
+            it.alpha = 0.5F
+            it.isClickable = false
+        }
+        if (nbOnigiri < GAINED_ONIGIRI) {
+            binding.nextButton.isEnabled = false
+            binding.nextButton.isClickable = false
+            binding.nextButton.setBackgroundColor(getColor(R.color.button_disabled))
+        }
     }
 
     private fun gameOver() {
@@ -155,15 +202,15 @@ class CharacterFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun updateNextButton() {
+    private fun updateButton(button: Button) {
         if (nbOnigiri >= GAINED_ONIGIRI) {
-            binding.nextButton.isEnabled = true
-            binding.nextButton.isClickable = true
-            binding.nextButton.setBackgroundColor(getColor(R.color.button_green))
+            button.isEnabled = true
+            button.isClickable = true
+            button.setBackgroundColor(getColor(R.color.button_green))
         } else {
-            binding.nextButton.isEnabled = false
-            binding.nextButton.isClickable = false
-            binding.nextButton.setBackgroundColor(getColor(R.color.button_disabled))
+            button.isEnabled = false
+            button.isClickable = false
+            button.setBackgroundColor(getColor(R.color.button_disabled))
         }
     }
 
