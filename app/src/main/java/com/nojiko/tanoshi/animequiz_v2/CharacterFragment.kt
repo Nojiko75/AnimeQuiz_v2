@@ -1,10 +1,7 @@
 package com.nojiko.tanoshi.animequiz_v2
 
 import android.content.res.ColorStateList
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +33,8 @@ class CharacterFragment : Fragment() {
     private var nbCharacter = 0
     private var nbFounded = 0
     private var clueUsed = false
+    private var counterIsActive = false
+    private lateinit var countDownTimer: CountDownTimer
     private lateinit var rightAnswer: String
     private lateinit var questionList: List<EasyCharacterQuestion>
     private lateinit var proposals: List<ShapeableImageView>
@@ -47,6 +46,9 @@ class CharacterFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.timer.max = 15
+        binding.timer.progress = 15000
 
         proposals =
             mutableListOf(binding.answerA, binding.answerB, binding.answerC, binding.answerD)
@@ -81,6 +83,7 @@ class CharacterFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showGame() {
         if (index < nbCharacter) {
+            startTimer()
             val question = questionList[index]
             rightAnswer = question.image
             binding.characterName.text = question.rightAnswer
@@ -115,6 +118,8 @@ class CharacterFragment : Fragment() {
                 }
                 updateData(answerColor)
                 image.strokeColor = ColorStateList.valueOf(getColor(requireContext(), answerColor))
+                resetTimer()
+                //endTimer()
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (index + 1 < nbCharacter) {
                         ++index
@@ -157,6 +162,14 @@ class CharacterFragment : Fragment() {
     private fun pass() {
         nbOnigiri -= GAINED_ONIGIRI
         binding.nbOnigiri.text = nbOnigiri.toString()
+        nextQuestion()
+        if (nbOnigiri < GAINED_ONIGIRI) {
+            binding.clueButton.disable()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun nextQuestion() {
         if (index + 1 < nbCharacter) {
             ++index
             showGame()
@@ -165,9 +178,6 @@ class CharacterFragment : Fragment() {
         } else {
             //the game is over, go to DoneFragment
             gameOver()
-        }
-        if (nbOnigiri < GAINED_ONIGIRI) {
-            binding.clueButton.disable()
         }
     }
 
@@ -206,6 +216,61 @@ class CharacterFragment : Fragment() {
             button.enable()
         } else {
             button.disable()
+        }
+    }
+
+    private fun startTimer() {
+        if (!counterIsActive) {
+            counterIsActive = true
+            binding.timer.isEnabled = false
+
+            countDownTimer = object : CountDownTimer(binding.timer.progress * 1000L, 1000) {
+                override fun onFinish() {
+
+                }
+
+                @RequiresApi(Build.VERSION_CODES.M)
+                override fun onTick(currentValue: Long) {
+                    val remainingSeconds = (currentValue / 1000).toInt()
+                    if (remainingSeconds == 0) {
+                        nextQuestion()
+                    } else {
+                        updateTimer(remainingSeconds)
+                    }
+                }
+            }.start()
+        } else {
+            resetTimer()
+            startTimer()
+        }
+    }
+
+    private fun updateTimer(currentValue: Int) {
+        binding.timer.progress = currentValue
+    }
+
+    private fun resetTimer() {
+        binding.timer.progress = 15000
+        countDownTimer.cancel()
+        binding.timer.isEnabled = true
+        counterIsActive = false
+    }
+
+    private fun endTimer() {
+        binding.timer.isEnabled = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (counterIsActive) {
+            countDownTimer.cancel()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (counterIsActive) {
+            countDownTimer.cancel()
         }
     }
 
