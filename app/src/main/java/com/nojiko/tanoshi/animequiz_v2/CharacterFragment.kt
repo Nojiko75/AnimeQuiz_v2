@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.imageview.ShapeableImageView
@@ -246,6 +247,13 @@ class CharacterFragment : Fragment() {
     }
 
     private fun updateTimer(currentValue: Int) {
+        when (currentValue) {
+            10 -> binding.timer.progressDrawable =
+                getDrawable(requireContext(), R.drawable.middle_timer)
+            4 -> binding.timer.progressDrawable =
+                getDrawable(requireContext(), R.drawable.low_timer)
+            else -> {}
+        }
         binding.timer.progress = currentValue
     }
 
@@ -254,6 +262,7 @@ class CharacterFragment : Fragment() {
         countDownTimer.cancel()
         binding.timer.isEnabled = true
         counterIsActive = false
+        binding.timer.progressDrawable = getDrawable(requireContext(), R.drawable.custom_timer)
     }
 
     private fun endTimer() {
