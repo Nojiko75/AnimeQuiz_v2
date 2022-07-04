@@ -57,6 +57,7 @@ class CharacterFragment : Fragment() {
         db.collection(QUESTION_COLLECTION)
             .get()
             .addOnSuccessListener { result ->
+                showData()
                 questionList = convertToModel(result)
                 nbCharacter = questionList.size
                 showGame()
@@ -267,6 +268,11 @@ class CharacterFragment : Fragment() {
 
     private fun endTimer() {
         binding.timer.isEnabled = false
+    }
+
+    private fun showData() {
+        binding.progressCircular.visibility = View.GONE
+        binding.viewGame.visibility = View.VISIBLE
     }
 
     override fun onPause() {
